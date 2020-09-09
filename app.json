@@ -1,12 +1,7 @@
 {
-  "name": "Start on Heroku: Go",
-  "description": "Go Getting Started Example App",
-  "keywords": [
-    "getting-started",
-    "go",
-    "sample",
-    "example"
-  ],
-  "website": "http://github.com/heroku/go-getting-started",
-  "repository": "http://github.com/heroku/go-getting-started"
+  "name": "Speedtest Server",
+  "description": "Speedtest server in Go serving data files",
+  "keywords": [],
+  "website": "http://github.com/BrennerSpear/go-getting-started",
+  "repository": "http://github.com/BrennerSpear/go-getting-started"
 }

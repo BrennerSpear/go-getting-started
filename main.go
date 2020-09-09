@@ -155,6 +155,9 @@ func source(w http.ResponseWriter, r *http.Request) {
 func main() {
 	port := os.Getenv("PORT")
 
+	log.Print("the port:")
+	log.Print(port)
+
 	if port == "" {
 			log.Fatal("$PORT must be set")
 		}
