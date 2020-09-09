@@ -30,7 +30,7 @@ type sourceCmd struct {
 	Period		int
 }
 
-var addr = flag.String("addr", "0.0.0.0:5000", "http service address")
+var addr = flag.String("addr", "0.0.0.0:4000", "http service address")
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
@@ -167,7 +167,7 @@ func main() {
 	http.HandleFunc("/speedtest/source", source)
 	http.HandleFunc("/speedtest/sink", sink)
 	http.HandleFunc("/speedtest/ip", ipaddress)
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 
 
 	
