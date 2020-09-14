@@ -12,13 +12,24 @@ import (
 log "github.com/sirupsen/logrus"
 "github.com/umahmood/haversine"
 
-"github.com/BrennerSpear/go-getting-started/config"
-"github.com/BrennerSpear/go-getting-started/results"
 )
 
 var (
 	serverCoord haversine.Coord
 )
+
+type IPInfoResponse struct {
+	IP           string `json:"ip"`
+	Hostname     string `json:"hostname"`
+	City         string `json:"city"`
+	Region       string `json:"region"`
+	Country      string `json:"country"`
+	Location     string `json:"loc"`
+	Organization string `json:"org"`
+	Postal       string `json:"postal"`
+	Timezone     string `json:"timezone"`
+	Readme       string `json:"readme"`
+}
 
 func getRandomData(length int) []byte {
 	data := make([]byte, length)
@@ -45,8 +56,8 @@ func getIPInfoURL(address string) string {
 	return ipInfoURL
 }
 
-func getIPInfo(addr string) results.IPInfoResponse {
-	var ret results.IPInfoResponse
+func getIPInfo(addr string) IPInfoResponse {
+	var ret IPInfoResponse
 	resp, err := http.DefaultClient.Get(getIPInfoURL(addr))
 	if err != nil {
 		log.Errorf("Error getting response from ipinfo.io: %s", err)
@@ -67,7 +78,7 @@ func getIPInfo(addr string) results.IPInfoResponse {
 	return ret
 }
 
-func SetServerLocation(conf *config.Config) {
+func SetServerLocation(conf *Config) {
 	if conf.ServerLat > 0 && conf.ServerLng > 0 {
 		log.Infof("Configured server coordinates: %.6f, %.6f", conf.ServerLat, conf.ServerLng)
 		serverCoord.Lat = conf.ServerLat
@@ -75,7 +86,7 @@ func SetServerLocation(conf *config.Config) {
 		return
 	}
 
-	var ret results.IPInfoResponse
+	var ret IPInfoResponse
 	resp, err := http.DefaultClient.Get(getIPInfoURL(""))
 	if err != nil {
 		log.Errorf("Error getting repsonse from ipinfo.io: %s", err)
