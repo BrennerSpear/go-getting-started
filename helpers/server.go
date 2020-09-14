@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -50,6 +51,8 @@ func ListenAndServe(conf *Config) error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
+
+	conf.Port = os.Getenv("PORT")
 	addr := net.JoinHostPort(conf.BindAddress, conf.Port)
 	log.Infof("Starting backend server on localhost%s", addr)
 	//r.Get("/*", pages)
