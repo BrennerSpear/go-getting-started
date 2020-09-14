@@ -15,15 +15,15 @@ var (
 func main() {
 	flag.Parse()
 
-	var conf config.Config
+	var conf helpers.Config
 	if *optConfig != "" {
-		conf = config.LoadFile(*optConfig)
+		conf = helpers.LoadFile(*optConfig)
 	} else {
-		conf = config.Load()
+		conf = helpers.Load()
 	}
 
-	web.SetServerLocation(&conf)
+	helpers.SetServerLocation(&conf)
 	//results.Initialize(&conf)
 	//database.SetDBInfo(&conf)
-	log.Fatal(web.ListenAndServe(&conf))
+	log.Fatal(helpers.ListenAndServe(&conf))
 }

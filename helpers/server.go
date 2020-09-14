@@ -1,8 +1,9 @@
 package helpers
 
 import (
+	"encoding/json"
+	"io"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"regexp"
@@ -18,6 +19,11 @@ log "github.com/sirupsen/logrus"
 
 )
 
+type Result struct {
+	ProcessedString string         `json:"processedString"`
+	RawISPInfo      IPInfoResponse `json:"rawIspInfo"`
+}
+
 const (
 	// chunk size is 1 mib
 	chunkSize = 1048576
@@ -28,7 +34,7 @@ var (
 	randomData = getRandomData(chunkSize)
 )
 
-func ListenAndServe(conf *config.Config) error {
+func ListenAndServe(conf *Config) error {
 	r := chi.NewRouter()
 	r.Use(middleware.RealIP)
 	r.Use(middleware.GetHead)
@@ -58,7 +64,7 @@ func ListenAndServe(conf *config.Config) error {
 	return http.ListenAndServe(addr, r)
 }
 
-func listenProxyProtocol(conf *config.Config, r *chi.Mux) {
+func listenProxyProtocol(conf *Config, r *chi.Mux) {
 	if conf.ProxyProtocolPort != "0" {
 		addr := net.JoinHostPort(conf.BindAddress, conf.ProxyProtocolPort)
 		l, err := net.Listen("tcp", addr)
@@ -126,7 +132,7 @@ func garbage(w http.ResponseWriter, r *http.Request) {
 }
 
 func getIP(w http.ResponseWriter, r *http.Request) {
-	var ret results.Result
+	var ret Result
 
 	clientIP := r.RemoteAddr
 	clientIP = strings.ReplaceAll(clientIP, "::ffff:", "")

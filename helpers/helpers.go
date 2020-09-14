@@ -40,7 +40,7 @@ func getRandomData(length int) []byte {
 }
 
 func getIPInfoURL(address string) string {
-	apiKey := config.LoadedConfig().IPInfoAPIKey
+	apiKey := LoadedConfig().IPInfoAPIKey
 
 	ipInfoURL := `https://ipinfo.io/%s/json`
 	if address != "" {
