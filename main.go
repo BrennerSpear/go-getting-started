@@ -5,8 +5,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brennerspear/go-getting-started/config"
-	"github.com/brennerspear/go-getting-started/web"
+	"github.com/brennerspear/go-getting-started/helpers"
 )
 
 var (

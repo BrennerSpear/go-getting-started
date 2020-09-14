@@ -16,8 +16,6 @@ import (
 "github.com/pires/go-proxyproto"
 log "github.com/sirupsen/logrus"
 
-"github.com/BrennerSpear/go-getting-started/config"
-"github.com/BrennerSpear/go-getting-started/results"
 )
 
 const (
